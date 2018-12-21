@@ -50,7 +50,7 @@ tags:
 
    如果只是简单地检测 handle 的 touchend 事件, 如果手指滑出了 handle 就无法触发了, 所以同时还要检测 handle 的 touchcancel 事件(当手指滑出 handle 节点的范围时触发), 详细代码在下方给出
 
-整体代码如下:
+# 整体代码如下:
 
 ```javascript
 /* slider.js */
@@ -105,4 +105,4 @@ export default class Slider extends cc.Component {
 }
 ```
 
-将代码绑定到 Slider 所在节点进行微调即可实现滑动以解锁的效果.
+# 将代码绑定到 Slider 所在节点进行微调即可实现滑动以解锁的效果.
