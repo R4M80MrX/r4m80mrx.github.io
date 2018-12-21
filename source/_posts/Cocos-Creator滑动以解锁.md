@@ -10,7 +10,7 @@ tags:
 
 ## 今天突然想做一个类似 iPhone 的滑动以解锁.
 
-![slide demo](Cocos-Creator滑动以解锁/slidedemo.gif)
+<div align=center><img src="Cocos-Creator滑动以解锁/slidedemo.gif" width = "480" height = "300"></div>
 
 ## 首先想到使用 Creator 自带的 cc.Slider 组件, 在 Slide 事件中获取 Slider 的 progress, 遇到了问题:
 
