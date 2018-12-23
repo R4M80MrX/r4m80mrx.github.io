@@ -44,8 +44,8 @@ cache:
 # For example, you put your favicons into `hexo-site/source/images` directory.
 # Then need to rename & redefine they on any other names, otherwise icons from Next will rewrite your custom icons in Hexo.
 favicon:
-  small: /images/snowflake_16px.png
-  medium: /images/snowflake_32px.png
+  small: /images/bamboo-16px.png
+  medium: /images/bamboo-32px.png
   # apple_touch_icon: /images/apple-touch-icon-next.png
   # safari_pinned_tab: /images/logo.svg
   # android_manifest: /images/manifest.json
@@ -65,11 +65,11 @@ footer:
   icon:
     # Icon name in fontawesome, see: https://fontawesome.com/v4.7.0/icons
     # `heart` is recommended with animation in red (#ff0000).
-    name: user
+    name: heart
     # If you want to animate the icon, set it to true.
-    animated: false
+    animated: true
     # Change the color of icon, using Hex Code.
-    color: '#808080'
+    color: '#ff0000'
 
   # If not defined, will be used `author` from Hexo main config.
   copyright:
@@ -965,8 +965,8 @@ vendors:
   # pace: //cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js
   # pace_css: //cdn.jsdelivr.net/npm/pace-js@1.0.2/themes/blue/pace-theme-minimal.css
   # pace_css: //cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css
-  pace:
-  pace_css:
+  pace: //cdn.bootcss.com/pace/1.0.2/pace.min.js
+  pace_css: //cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.min.css
 
   # Internal version: 1.0.0
   # See: https://github.com/theme-next/theme-next-canvas-nest
@@ -1048,3 +1048,6 @@ vendors:
 css: css
 js: js
 images: images
+
+# Fireworks
+fireworks: true

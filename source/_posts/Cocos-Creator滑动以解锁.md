@@ -2,6 +2,7 @@
 title: Cocos Creator类似iPhone的滑动以解锁
 date: 2018-12-21 10:34:39
 tags:
+copyright: true
 ---
 
 - Creator 版本: v2.1.0
