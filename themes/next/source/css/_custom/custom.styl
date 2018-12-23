@@ -4,10 +4,9 @@ html {
 }
 
 html a {
-  cursor: url("/image/link.cur"),auto!important
+  cursor: url("/images/link.cur"),auto!important
 }
 
-// 更好的侧边滚动条
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -16,7 +15,7 @@ html a {
   width: 0;
   height: 0;
 }
-::-webkit-scrollbar-button:start:increment,::-webkit-scrollbar-button:end:decrement {
+::-webkit-scrollbar-button:start:increment,::-webkit-scrollbar-button:decrement {
   display: none;
 }
 ::-webkit-scrollbar-corner {
@@ -34,28 +33,24 @@ html a {
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
 }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 ::-webkit-scrollbar-track:hover {
-  background-color: rgba(0,0,0,.15);
 }
 ::-webkit-scrollbar-button:start {
   width: 10px;
   height: 10px;
-  background: url(../images/scrollbar_arrow.png) no-repeat 0 0;
 }
 ::-webkit-scrollbar-button:start:hover {
-  background: url(../images/scrollbar_arrow.png) no-repeat -15px 0;
 }
 ::-webkit-scrollbar-button:start:active {
-  background: url(../images/scrollbar_arrow.png) no-repeat -30px 0;
 }
 ::-webkit-scrollbar-button:end {
   width: 10px;
   height: 10px;
-  background: url(../images/scrollbar_arrow.png) no-repeat 0 -18px;
 }
-::-webkit-scrollbar-button:end:hover {
-  background: url(../images/scrollbar_arrow.png) no-repeat -15px -18px;
+::-webkit-scrollbar-button:hover {
 }
-::-webkit-scrollbar-button:end:active {
-  background: url(../images/scrollbar_arrow.png) no-repeat -30px -18px;
+::-webkit-scrollbar-button:active {
 }
