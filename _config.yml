@@ -131,8 +131,8 @@ live2d:
     hOffset: 0
     vOffset: -20
   mobile:
-    show: true
-    scale: 0.5
+    show: false
+    scale: 0.2
   react:
     opacityDefault: 0.7
     opacityOnHover: 0.2
