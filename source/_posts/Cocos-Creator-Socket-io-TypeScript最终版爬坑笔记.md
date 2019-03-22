@@ -1,5 +1,5 @@
 ---
-title: Cocos Creator + Socket.io + TypeScript爬坑笔记
+title: Cocos Creator + Socket.io + TypeScript最终版爬坑笔记
 copyright: true
 date: 2019-03-22 16:24:08
 tags:
