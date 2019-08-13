@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bamboo-32px.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bamboo-16px.png?v=6.6.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="12345678# 内联显示matplotlib输出%matplotlib inline# 导入相关模块import mathimport matplotlibimport numpy as npimport matplotlib.pyplot as pltfrom prettytable import PrettyTable 1234567891011121314151617181920# 绘制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数值分析之二分法求解">
+<meta property="og:url" content="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/index.html">
+<meta property="og:site_name" content="Mr.X">
+<meta property="og:description" content="12345678# 内联显示matplotlib输出%matplotlib inline# 导入相关模块import mathimport matplotlibimport numpy as npimport matplotlib.pyplot as pltfrom prettytable import PrettyTable 1234567891011121314151617181920# 绘制">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/output_8_0.png">
+<meta property="og:image" content="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/output_10_1.png">
+<meta property="og:updated_time" content="2019-08-13T17:38:10.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python数值分析之二分法求解">
+<meta name="twitter:description" content="12345678# 内联显示matplotlib输出%matplotlib inline# 导入相关模块import mathimport matplotlibimport numpy as npimport matplotlib.pyplot as pltfrom prettytable import PrettyTable 1234567891011121314151617181920# 绘制">
+<meta name="twitter:image" content="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/output_8_0.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Python数值分析之二分法求解 | Mr.X</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/R4M80MrX"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.X</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">犟人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rambo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eastwood.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.X">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python数值分析之二分法求解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-28 20:19:43" itemprop="dateCreated datePublished" datetime="2019-04-28T20:19:43+08:00">2019-04-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-14 01:38:10" itemprop="dateModified" datetime="2019-08-14T01:38:10+08:00">2019-08-14</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/28/Python数值分析之二分法求解/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/04/28/Python数值分析之二分法求解/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/04/28/Python数值分析之二分法求解/" class="leancloud_visitors" data-flag-title="Python数值分析之二分法求解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内联显示matplotlib输出</span></span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># 导入相关模块</span></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制f(x)的图像</span></span><br><span class="line">e = math.e</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line">    y = e**x + <span class="number">4</span>*x**<span class="number">3</span> + <span class="number">2</span>*x**<span class="number">2</span> + x - <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> y</span><br><span class="line"></span><br><span class="line">plt.figure(facecolor=<span class="string">'white'</span>,edgecolor=<span class="string">'white'</span>)</span><br><span class="line"></span><br><span class="line">plt.xticks(np.arange(min(x), max(x)+<span class="number">1</span>, <span class="number">0.1</span>))</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">'$ f(x) = e^x + 4*x^3 + 2*x^2 + x - 2 $'</span>)</span><br><span class="line"></span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(x, f(x))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/04/28/Python数值分析之二分法求解/output_8_0.png" alt="png"></p>
+<h2 id="2-二分法求解-f-x-在-0-1-区间上的根"><a href="#2-二分法求解-f-x-在-0-1-区间上的根" class="headerlink" title="2. 二分法求解 f(x)在[0, 1]区间上的根"></a>2. 二分法求解 f(x)在[0, 1]区间上的根</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 二分法求根</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FError</span><span class="params">(Exception)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dichotomy</span><span class="params">(f, interval, error, m)</span>:</span></span><br><span class="line">    <span class="string">'''二分法求方程根</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        f: 方程</span></span><br><span class="line"><span class="string">        interval: 有根区间数组</span></span><br><span class="line"><span class="string">        error: 允许的迭代误差</span></span><br><span class="line"><span class="string">        m: 最大迭代次数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        如果在最大迭代次数内得到了满足要求的根, 则返回该值</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Raises:</span></span><br><span class="line"><span class="string">        参数错误,超出最大迭代次数</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    n = <span class="number">0</span></span><br><span class="line">    c = <span class="number">0</span></span><br><span class="line">    x = <span class="number">0</span></span><br><span class="line">    temp = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#     try:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="number">2</span> == len(interval):</span><br><span class="line">        (a, b) = interval</span><br><span class="line">        <span class="keyword">if</span> (a &gt; b):</span><br><span class="line">            print(<span class="string">f'[<span class="subst">&#123;a&#125;</span>, <span class="subst">&#123;b&#125;</span>]区间无解'</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">if</span> f(a)==<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> a</span><br><span class="line">        <span class="keyword">if</span> f(b)==<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> b</span><br><span class="line">        <span class="keyword">if</span> (f(a)*f(b)&gt;<span class="number">0</span>):</span><br><span class="line">            print(<span class="string">'f(a), f(b)同号'</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    table = PrettyTable([<span class="string">'迭代次数'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'x'</span>, <span class="string">'f(x)'</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (n&lt;m):</span><br><span class="line">        plt.plot([a, b], [f(a), f(b)])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (b-a) &lt; error:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 取a,b中点x</span></span><br><span class="line">        x = (a+b)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">        y = f(x)</span><br><span class="line"></span><br><span class="line">        table.add_row([n+<span class="number">1</span>, a, b, x, y])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 若f(x)=0,返回x</span></span><br><span class="line">        <span class="keyword">if</span> f(x)==<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="comment"># 取函数值异号两项作为新区间</span></span><br><span class="line">        <span class="keyword">elif</span> (f(x)*f(a)&lt;<span class="number">0</span>):</span><br><span class="line">            b = x</span><br><span class="line">        <span class="keyword">elif</span> (f(x)*f(b)&lt;<span class="number">0</span>):</span><br><span class="line">            a = x</span><br><span class="line">        n += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    print(table)</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line">plt.figure(facecolor=<span class="string">'white'</span>,edgecolor=<span class="string">'white'</span>)</span><br><span class="line"></span><br><span class="line">plt.xticks(np.arange(min(x), max(x)+<span class="number">1</span>, <span class="number">0.1</span>))</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">'$ f(x) = e^x + 4*x^3 + 2*x^2 + x - 2 $'</span>)</span><br><span class="line"></span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">plt.plot(x, f(x))</span><br><span class="line"></span><br><span class="line">dichotomy(f, [<span class="number">0</span>, <span class="number">1</span>], <span class="number">10</span>**<span class="number">-4</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>+----------+-----------------+----------------+------------------+------------------------+
+| 迭代次数 |        a        |       b        |        x         |          f(x)          |
++----------+-----------------+----------------+------------------+------------------------+
+|    1     |        0        |       1        |       0.5        |   1.1487212707001282   |
+|    2     |        0        |      0.5       |       0.25       |  -0.2784745833122586   |
+|    3     |       0.25      |      0.5       |      0.375       |  0.32217891461820125   |
+|    4     |       0.25      |     0.375      |      0.3125      | -0.0032792463262036886 |
+|    5     |      0.3125     |     0.375      |     0.34375      |  0.15277974586321097   |
+|    6     |      0.3125     |    0.34375     |     0.328125     |  0.07313118351443926   |
+|    7     |      0.3125     |    0.328125    |    0.3203125     |  0.03452725444645388   |
+|    8     |      0.3125     |   0.3203125    |    0.31640625    |  0.015525081793443807  |
+|    9     |      0.3125     |   0.31640625   |   0.314453125    |  0.006098281683223128  |
+|    10    |      0.3125     |  0.314453125   |   0.3134765625   | 0.0014033704793536828  |
+|    11    |      0.3125     |  0.3134765625  |  0.31298828125   | -0.0009394732466017075 |
+|    12    |  0.31298828125  |  0.3134765625  |  0.313232421875  | 0.00023156460100803855 |
+|    13    |  0.31298828125  | 0.313232421875 | 0.3131103515625  | -0.000354050303566833  |
+|    14    | 0.3131103515625 | 0.313232421875 | 0.31317138671875 | -6.126684935581217e-05 |
++----------+-----------------+----------------+------------------+------------------------+
+</code></pre><p><img src="/2019/04/28/Python数值分析之二分法求解/output_10_1.png" alt="png"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/04/28/Python数值分析之二分法求解/">Python数值分析之二分法求解</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Rambo 的个人博客">Rambo</a></p>
+  <p><span>发布时间:</span>2019年04月28日 - 20:19</p>
+  <p><span>最后更新:</span>2019年08月14日 - 01:38</p>
+  <p><span>原始链接:</span><a href="/2019/04/28/Python数值分析之二分法求解/" title="Python数值分析之二分法求解">https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://blog.rambomrx.com/2019/04/28/Python数值分析之二分法求解/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+    
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/28/Python分析比特币价格/" rel="next" title="Python分析比特币价格">
+                <i class="fa fa-chevron-left"></i> Python分析比特币价格
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eastwood.jpg" alt="Rambo">
+            
+              <p class="site-author-name" itemprop="name">Rambo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1491163&auto=1&height=66"></iframe>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://macshuo.com/" title="http://macshuo.com/" rel="noopener" target="_blank">Vincente</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-二分法求解-f-x-在-0-1-区间上的根"><span class="nav-number">1.</span> <span class="nav-text">2. 二分法求解 f(x)在[0, 1]区间上的根</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rambo</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: 'eerHCcqrNh3TNUljwLxbhCkv-gzGzoHsz',
+        appKey: 'B1Xzmutgd6MmooKCs6qbEHEX',
+        placeholder: '评论',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+

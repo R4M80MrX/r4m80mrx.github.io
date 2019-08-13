@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+      
+    
+  <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.min.css" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bamboo-32px.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bamboo-16px.png?v=6.6.0">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="想法经验0. 选择困难症前端三大框架, 各有优劣, 网上各种测评看了好久, 最终决定先拿 vue 下手然后问题又来了, 用什么 UI 框架呢?  vux element-ui mint-ui bootstrap-vue ……  最终选择了星星数最多的 vux, 虽然这个框架是个人开发维护的, 也存在很多问题. 1. vue-cli3 与 vux 的融合vux 官方暂时还没有适配 vue-cli3v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js学习笔记">
+<meta property="og:url" content="https://blog.rambomrx.com/2019/03/21/Vue-js学习笔记/index.html">
+<meta property="og:site_name" content="Mr.X">
+<meta property="og:description" content="想法经验0. 选择困难症前端三大框架, 各有优劣, 网上各种测评看了好久, 最终决定先拿 vue 下手然后问题又来了, 用什么 UI 框架呢?  vux element-ui mint-ui bootstrap-vue ……  最终选择了星星数最多的 vux, 虽然这个框架是个人开发维护的, 也存在很多问题. 1. vue-cli3 与 vux 的融合vux 官方暂时还没有适配 vue-cli3v">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-13T17:38:10.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js学习笔记">
+<meta name="twitter:description" content="想法经验0. 选择困难症前端三大框架, 各有优劣, 网上各种测评看了好久, 最终决定先拿 vue 下手然后问题又来了, 用什么 UI 框架呢?  vux element-ui mint-ui bootstrap-vue ……  最终选择了星星数最多的 vux, 虽然这个框架是个人开发维护的, 也存在很多问题. 1. vue-cli3 与 vux 的融合vux 官方暂时还没有适配 vue-cli3v">
+
+
+
+
+
+
+  <link rel="canonical" href="https://blog.rambomrx.com/2019/03/21/Vue-js学习笔记/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Vue.js学习笔记 | Mr.X</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/R4M80MrX"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.X</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">犟人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.rambomrx.com/2019/03/21/Vue-js学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rambo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/eastwood.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.X">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue.js学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-21 20:28:43" itemprop="dateCreated datePublished" datetime="2019-03-21T20:28:43+08:00">2019-03-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-14 01:38:10" itemprop="dateModified" datetime="2019-08-14T01:38:10+08:00">2019-08-14</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/21/Vue-js学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/21/Vue-js学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/03/21/Vue-js学习笔记/" class="leancloud_visitors" data-flag-title="Vue.js学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="想法"><a href="#想法" class="headerlink" title="想法"></a>想法</h1><h1 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h1><h2 id="0-选择困难症"><a href="#0-选择困难症" class="headerlink" title="0. 选择困难症"></a>0. 选择困难症</h2><p>前端三大框架, 各有优劣, 网上各种测评看了好久, 最终决定先拿 vue 下手<br>然后问题又来了, 用什么 UI 框架呢?</p>
+<ul>
+<li>vux</li>
+<li>element-ui</li>
+<li>mint-ui</li>
+<li>bootstrap-vue</li>
+<li>……</li>
+</ul>
+<p>最终选择了星星数最多的 vux, 虽然这个框架是个人开发维护的, 也存在很多问题.</p>
+<h2 id="1-vue-cli3-与-vux-的融合"><a href="#1-vue-cli3-与-vux-的融合" class="headerlink" title="1. vue-cli3 与 vux 的融合"></a>1. vue-cli3 与 vux 的融合</h2><p>vux 官方暂时还没有适配 vue-cli3<br><a href="https://cli.vuejs.org/zh/" target="_blank" rel="noopener">vue-cli3</a> 可以用 <a href="https://www.npmjs.com/package/vue-cli-plugin-vux" target="_blank" rel="noopener">vue-cli-plugin-vux</a> 一键安装 <a href="https://vux.li/" target="_blank" rel="noopener">vux</a> UI 框架, 不需要手动适配 vue-loader</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm i vue-cli-plugin-vux</span><br><span class="line">vue add vux</span><br></pre></td></tr></table></figure>
+<h2 id="2-初始化项目的注意事项"><a href="#2-初始化项目的注意事项" class="headerlink" title="2. 初始化项目的注意事项"></a>2. 初始化项目的注意事项</h2><p>可以通过命令行输入<code>vue ui</code>打开图形化界面<br>也可以<code>vue create `project-name`</code>直接在命令行创建<br>两种方式的效果是一样的, 看你习惯用哪种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  Check the features needed for your project: (Press &lt;space&gt; to select, &lt;a&gt; to toggle all, &lt;i&gt; to invert selection)</span><br><span class="line">(*) Babel //转码器, 将ES6+转换成ES5以适配更多浏览器</span><br><span class="line">( ) TypeScript //根据情况自选</span><br><span class="line">( ) Progressive Web App (PWA) Support //根据情况自选</span><br><span class="line">(*) Router //前端路由, 选上</span><br><span class="line">(*) Vuex //全局状态管理, 选上</span><br><span class="line">(*) CSS Pre-processors //CSS预处理器, 选上</span><br><span class="line">( ) Linter / Formatter //如果已经在编辑器里安装了ESLint, Prettier等插件的话就不用选, 会冲突</span><br><span class="line">( ) Unit Testing //单元测试, 暂时没用上</span><br><span class="line">( ) E2E Testing //暂时没用上</span><br></pre></td></tr></table></figure>
+<p>回车之后就进入了进一步的配置.<br><code>Use history mode for router?</code>默认 Y, 链接里就不会出现/#/<br>一路回车即可.</p>
+<h2 id="3-VSCode-对-Webpack-Alias-路径的支持-‘-‘-只需在项目根目录中添加-jsconfig-json-文件-内容如下"><a href="#3-VSCode-对-Webpack-Alias-路径的支持-‘-‘-只需在项目根目录中添加-jsconfig-json-文件-内容如下" class="headerlink" title="3. VSCode 对 Webpack Alias 路径的支持(‘@/‘), 只需在项目根目录中添加 jsconfig.json 文件, 内容如下:"></a>3. VSCode 对 Webpack Alias 路径的支持(‘@/‘), 只需在项目根目录中添加 jsconfig.json 文件, 内容如下:</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//jsconfig.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"baseUrl"</span>: <span class="string">"."</span>,</span><br><span class="line">    <span class="attr">"paths"</span>: &#123;</span><br><span class="line">      <span class="attr">"@/*"</span>: [<span class="string">"./src/*"</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"./src/**/*"</span>],</span><br><span class="line">  <span class="attr">"exclude"</span>: [<span class="string">"node_modules"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-Vue-js-Node-js-koa2-集成开发"><a href="#4-Vue-js-Node-js-koa2-集成开发" class="headerlink" title="4. Vue.js + Node.js(koa2)集成开发"></a>4. Vue.js + Node.js(koa2)集成开发</h2><p>开发全栈项目, 登录组件拼凑完成以后, 前端开发告一段落, 是时候写一点后端接口了. 目前没有找到比修改 proxy 更优雅的解决方案.</p>
+<p>另一种方法参考:<br><a href="https://juejin.im/post/5c2cc80bf265da6169175962" target="_blank" rel="noopener">【新手向】Vue.js + Node.js(koa) 合体指南</a></p>
+<h1 id="点子"><a href="#点子" class="headerlink" title="点子"></a>点子</h1><p><a href="https://github.com/wangdahoo/vonic" target="_blank" rel="noopener">https://github.com/wangdahoo/vonic</a><br><a href="http://ghbtns.com/#star" target="_blank" rel="noopener">http://ghbtns.com/#star</a></p>
+<iframe src="https://ghbtns.com/github-btn.html?user=twbs&repo=bootstrap&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/03/21/Vue-js学习笔记/">Vue.js学习笔记</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Rambo 的个人博客">Rambo</a></p>
+  <p><span>发布时间:</span>2019年03月21日 - 20:28</p>
+  <p><span>最后更新:</span>2019年08月14日 - 01:38</p>
+  <p><span>原始链接:</span><a href="/2019/03/21/Vue-js学习笔记/" title="Vue.js学习笔记">https://blog.rambomrx.com/2019/03/21/Vue-js学习笔记/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://blog.rambomrx.com/2019/03/21/Vue-js学习笔记/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+      $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+        });
+    });  
+</script>
+
+      
+    </div>
+    
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/21/Cocos-Creator滑动以解锁/" rel="next" title="Cocos Creator类似iPhone的滑动以解锁">
+                <i class="fa fa-chevron-left"></i> Cocos Creator类似iPhone的滑动以解锁
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/22/cookie-localStorage-sessionStorage的区别/" rel="prev" title="cookie, localStorage, sessionStorage的区别">
+                cookie, localStorage, sessionStorage的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/eastwood.jpg" alt="Rambo">
+            
+              <p class="site-author-name" itemprop="name">Rambo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1491163&auto=1&height=66"></iframe>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://macshuo.com/" title="http://macshuo.com/" rel="noopener" target="_blank">Vincente</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#想法"><span class="nav-number">1.</span> <span class="nav-text">想法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经验"><span class="nav-number">2.</span> <span class="nav-text">经验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-选择困难症"><span class="nav-number">2.1.</span> <span class="nav-text">0. 选择困难症</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-vue-cli3-与-vux-的融合"><span class="nav-number">2.2.</span> <span class="nav-text">1. vue-cli3 与 vux 的融合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-初始化项目的注意事项"><span class="nav-number">2.3.</span> <span class="nav-text">2. 初始化项目的注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-VSCode-对-Webpack-Alias-路径的支持-‘-‘-只需在项目根目录中添加-jsconfig-json-文件-内容如下"><span class="nav-number">2.4.</span> <span class="nav-text">3. VSCode 对 Webpack Alias 路径的支持(‘@/‘), 只需在项目根目录中添加 jsconfig.json 文件, 内容如下:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Vue-js-Node-js-koa2-集成开发"><span class="nav-number">2.5.</span> <span class="nav-text">4. Vue.js + Node.js(koa2)集成开发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#点子"><span class="nav-number">3.</span> <span class="nav-text">点子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rambo</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.6.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: 'eerHCcqrNh3TNUljwLxbhCkv-gzGzoHsz',
+        appKey: 'B1Xzmutgd6MmooKCs6qbEHEX',
+        placeholder: '评论',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: true
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/fireworks.js"></script>
+
+
