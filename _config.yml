@@ -14,7 +14,7 @@ avatar: /images/eastwood.jpg
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://blog.rambomrx.com
+url: https://blog.rambomrx.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -43,7 +43,7 @@ highlight:
   enable: true
   line_number: true
   auto_detect: false
-  tab_replace:
+  tab_replace: true
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -76,34 +76,15 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: next
 
-live2d:
-  enable: false
-  scriptFrom: local
-  pluginRootPath: live2dw/
-  pluginJsPath: lib/
-  pluginModelPath: assets/
-  model:
-    use: live2d-widget-model-wanko
-    scale: 1
-    hHeadPos: 0.5
-    vHeadPos: 0.618
-  display:
-    superSample: 2
-    width: 150
-    height: 300
-    position: right
-    hOffset: 0
-    vOffset: -20
-  mobile:
-    show: false
-    scale: 0.2
-  react:
-    opacityDefault: 0.7
-    opacityOnHover: 0.2
-
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
   repo: git@github.com:R4M80MrX/r4m80mrx.github.io.git
   branch: master
+
+# title, chinese available
+links_title: Links
+# links
+links:
+  Vincente: http://macshuo.com/
