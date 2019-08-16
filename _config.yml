@@ -88,3 +88,9 @@ links_title: Links
 # links
 links:
   Vincente: https://blog.vincenteliang.cn/
+
+# Algolia Search API Key
+algolia:
+  applicationID: 'IN61A4N8IQ'
+  apiKey: 'a666e99404134503c3803bc46a0cd9a3'
+  indexName: 'hexo'
