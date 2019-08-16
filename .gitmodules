@@ -1,0 +1,3 @@
+[submodule "themes/next/source/lib/algolia-instant-search"]
+	path = themes/next/source/lib/algolia-instant-search
+	url = https://github.com/theme-next/theme-next-algolia-instant-search
